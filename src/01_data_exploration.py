@@ -40,7 +40,7 @@ print(f"Depth     GT shape: {depth_gt.shape}  range: [{depth_gt.min():.0f}, {dep
 fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
 axes[0,0].imshow(cv2.cvtColor(left, cv2.COLOR_BGR2RGB))
-axes[0,0].set_title(f"Left – {ILLUM} – frame {FRAME:04d}")
+axes[0,0].set_title(f"Left – {ILLUM} – frame {FRAME:05d}")
 axes[0,0].axis('off')
 
 axes[0,1].imshow(cv2.cvtColor(right, cv2.COLOR_BGR2RGB))
@@ -56,7 +56,7 @@ axes[1,1].set_title("Ground-truth Depth (cm)")
 fig.colorbar(im2, ax=axes[1,1], orientation='vertical', shrink=0.7, label='depth (cm)')
 
 plt.tight_layout()
-plt.show()
+plt.savefig(f"output/exploration_{ILLUM}_frame{FRAME:05d}.png")
 
 # === Cell 5: Quick validity check ===
 valid_pixels = np.isfinite(disp_gt) & (disp_gt > 0)
