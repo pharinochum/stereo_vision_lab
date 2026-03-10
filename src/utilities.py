@@ -13,7 +13,7 @@ FOCAL_PX    = 615.0
 IMG_HEIGHT, IMG_WIDTH = 480, 640
 
 def load_stereo_pair(illum="daylight", frame=0):
-    base = f"/home/pharino/ECAM-MV/stereo_vision_lab/data/NewTsukubaStereoDataset/illumination/{illum}"
+    base = f"/home/pharino/Documents/github/stereo_vision_lab/data/NewTsukubaStereoDataset/illumination/{illum}"
     left  = cv2.imread(f"{base}/L_{frame:05d}.png", cv2.IMREAD_COLOR) # file name L_00001.png, R_00001
     right = cv2.imread(f"{base}/R_{frame:05d}.png", cv2.IMREAD_COLOR)
     if left is None or right is None:
@@ -21,7 +21,7 @@ def load_stereo_pair(illum="daylight", frame=0):
     return left, right
 
 def load_gt_map(frame=0, side="L", map_type="disparity"):
-    base = f"/home/pharino/ECAM-MV/stereo_vision_lab/data/NewTsukubaStereoDataset/groundtruth/{map_type}_maps"
+    base = f"/home/pharino/Documents/github/stereo_vision_lab/data/NewTsukubaStereoDataset/groundtruth/{map_type}_maps"
     if map_type == "disparity":
         path = f"{base}/{side}_{frame:05d}.pfm"
     elif map_type == "depth":

@@ -10,7 +10,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from src.utils import (
+from utilities import (
     load_stereo_pair,
     load_gt_map,
     disparity_to_depth,
@@ -20,7 +20,7 @@ from src.utils import (
 sns.set_style("whitegrid")
 
 ILLUM = "daylight"      # can be: daylight, fluorescent, lamps, flashlight
-FRAME  = 1            # try different frames: 0, 300, 600, 1200, ...
+FRAME  = 100            # try different frames: 0, 300, 600, 1200, ...
 
 # === Cell 2: Load one stereo pair ===
 left, right = load_stereo_pair(illum=ILLUM, frame=FRAME)
