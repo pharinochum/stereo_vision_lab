@@ -1,0 +1,8 @@
+numpy
+opencv-python
+matplotlib
+seaborn
+justpfm
+jupyter
+tqdm
+pandas
