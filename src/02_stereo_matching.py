@@ -2,12 +2,12 @@
 # 02_stereo_matching.ipynb
 # Goal: Compute disparity maps using OpenCV StereoBM and StereoSGBM
 # ────────────────────────────────────────────────────────────────
-%cd ..    
+
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from src.utils import (
+from utilities import (
     load_stereo_pair,
     load_gt_map,
     disparity_to_depth,
@@ -16,10 +16,11 @@ from src.utils import (
 )
 
 sns.set_style("whitegrid")
-%matplotlib inline
+ILLUM = "daylight"  # try different illuminations: daylight, fluorescent, lamps, flashlight
+FRAME = 600       # try different frames: 0, 300, 600, 1200, ...
 
 # === Cell 1: Load example frame ===
-left, right = load_stereo_pair(illum="daylight", frame=600)
+left, right = load_stereo_pair(illum=ILLUM, frame=FRAME)
 
 # === Cell 2: Compute both algorithms ===
 disp_bm   = compute_disparity(left, right, mode="BM")
@@ -44,7 +45,7 @@ axes[2].set_title("StereoSGBM (recommended)")
 fig.colorbar(im2, ax=axes[2], shrink=0.6)
 
 plt.tight_layout()
-plt.show()
+plt.savefig(f"output/Comparison_{ILLUM}_frame{FRAME:05d}.png")
 
 # === Cell 4: Error map example (qualitative) ===
 disp_gt = load_gt_map(600, side="L", map_type="disparity")
@@ -60,4 +61,4 @@ plt.imshow(err_sgbm, cmap='hot', vmin=0, vmax=5)
 plt.colorbar(label='Absolute error (pixels)')
 plt.title("StereoSGBM – Absolute Error Map")
 plt.axis('off')
-plt.show()
+plt.savefig(f"output/matching_{ILLUM}_frame{FRAME:05d}.png")

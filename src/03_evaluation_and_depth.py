@@ -2,13 +2,12 @@
 # 03_evaluation_and_depth.ipynb
 # Goal: Quantitative evaluation + disparity → depth conversion
 # ────────────────────────────────────────────────────────────────
-%cd ..    
 
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from src.utils import (
+from utilities import (
     load_stereo_pair,
     load_gt_map,
     disparity_to_depth,
@@ -18,8 +17,8 @@ from src.utils import (
     BASELINE_CM, FOCAL_PX
 )
 
-FRAME = 1
-ILLUM = "fluorescent"
+FRAME = 600
+ILLUM = "daylight"  # try different illuminations: daylight, fluorescent, lamps, flashlight
 
 left, right = load_stereo_pair(illum=ILLUM, frame=FRAME)
 disp_gt  = load_gt_map(FRAME, "L", "disparity")
@@ -61,7 +60,7 @@ plt.colorbar(label='Depth (cm)')
 plt.title("Estimated Depth (SGBM)")
 
 plt.tight_layout()
-plt.show()
+plt.savefig(f"output/depth_{ILLUM}_frame{FRAME:05d}.png")
 
 # === Error histogram ===
 valid = np.isfinite(disp_gt) & (disp_gt > 0) & occ_mask
@@ -74,4 +73,4 @@ plt.title("Disparity Error Distribution – non-occluded pixels")
 plt.xlabel("Absolute error (pixels)")
 plt.ylabel("Density")
 plt.xlim(0, 10)
-plt.show()
+plt.savefig(f"output/distribution_{ILLUM}_frame{FRAME:05d}.png")

@@ -7,11 +7,19 @@ import pandas as pd
 from tqdm.notebook import tqdm
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+from utilities import (
+    load_stereo_pair,
+    load_gt_map,
+    disparity_to_depth,
+    compute_disparity,
+    evaluate_disparity,
+    evaluate_depth,
+    BASELINE_CM, FOCAL_PX
+)
 
 illuminations = ["daylight", "fluorescent", "lamps", "flashlight"]
 algorithms    = ["BM", "SGBM"]
-n_frames      = 50   # adjust according to your time / computer
+n_frames      = 10   # adjust according to your time / computer
 
 results = []
 
@@ -20,7 +28,7 @@ for illum in illuminations:
     for algo in algorithms:
         rmse_list, bad3_list = [], []
         
-        for frame in tqdm(range(0, 1800, 1800//n_frames), desc=illum+" "+algo, leave=False):
+        for frame in tqdm(range(1, 1800, 1800//n_frames), desc=illum+" "+algo, leave=False):
             try:
                 left, right = load_stereo_pair(illum, frame)
                 disp_est = compute_disparity(left, right, mode=algo)
@@ -30,6 +38,7 @@ for illum in illuminations:
                 met = evaluate_disparity(disp_est, disp_gt, occ, nonocc_only=True)
                 rmse_list.append(met["rmse"])
                 bad3_list.append(met["bad3"])
+                print(met["rmse"], met["bad3"])
             except Exception as e:
                 continue  # skip broken frames
         

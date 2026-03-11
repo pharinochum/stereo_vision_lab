@@ -19,8 +19,8 @@ from utilities import (
 
 sns.set_style("whitegrid")
 
-ILLUM = "fluorescent"      # can be: daylight, fluorescent, lamps, flashlight
-FRAME  = 100            # try different frames: 0, 300, 600, 1200, ...
+ILLUM = "daylight"      # can be: daylight, fluorescent, lamps, flashlight
+FRAME  = 600            # try different frames: 0, 300, 600, 1200, ...
 
 # === Cell 2: Load one stereo pair ===
 left, right = load_stereo_pair(illum=ILLUM, frame=FRAME)
