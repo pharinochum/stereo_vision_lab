@@ -19,7 +19,7 @@ from utilities import (
 
 sns.set_style("whitegrid")
 
-ILLUM = "daylight"      # can be: daylight, fluorescent, lamps, flashlight
+ILLUM = "fluorescent"      # can be: daylight, fluorescent, lamps, flashlight
 FRAME  = 100            # try different frames: 0, 300, 600, 1200, ...
 
 # === Cell 2: Load one stereo pair ===
@@ -44,7 +44,7 @@ axes[0,0].set_title(f"Left – {ILLUM} – frame {FRAME:05d}")
 axes[0,0].axis('off')
 
 axes[0,1].imshow(cv2.cvtColor(right, cv2.COLOR_BGR2RGB))
-axes[0,1].set_title("Right")
+axes[0,1].set_title(f"Right – {ILLUM} – frame {FRAME:05d}")
 axes[0,1].axis('off')
 
 im1 = axes[1,0].imshow(disp_gt, cmap='jet', vmin=0, vmax=64)
