@@ -68,7 +68,7 @@ valid = np.isfinite(disp_gt) & (disp_gt > 0) & occ_mask
 err = np.abs(disp_sgbm[valid] - disp_gt[valid])
 
 plt.figure(figsize=(9,5))
-sns.histplot(err, bins=80, kde=True, stat="density")
+sns.histplot(err, bins=800, kde=True, stat="density")
 plt.title("Disparity Error Distribution – non-occluded pixels")
 plt.xlabel("Absolute error (pixels)")
 plt.ylabel("Density")

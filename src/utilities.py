@@ -81,12 +81,12 @@ def evaluate_disparity(disp_est, disp_gt, occ_mask=None, nonocc_only=True,
         valid &= occ_mask
     
     if valid.sum() < 100:
-        return {k: np.nan for k in ["rmse","mae","bad1","bad3","valid_pct"]}
+        return {k: np.nan for k in ["rmse","mean","bad1","bad3","valid_pct"]}
     
     err = np.abs(disp_est[valid] - disp_gt[valid])
     return {
         "rmse":     np.sqrt(np.mean(err**2)),
-        "mae":      np.mean(err),
+        "mean":      np.mean(err),
         "bad1":     np.mean(err > bad_thresholds[0]) * 100,
         "bad3":     np.mean(err > bad_thresholds[1]) * 100,
         "valid_pct": valid.mean() * 100
@@ -98,11 +98,11 @@ def evaluate_depth(depth_est, depth_gt, occ_mask=None):
     if occ_mask is not None:
         valid &= occ_mask
     if valid.sum() < 100:
-        return {k: np.nan for k in ["rmse_depth","mae_depth","bad5rel"]}
+        return {k: np.nan for k in ["rmse_depth","mean_depth","bad5rel"]}
     err_abs = np.abs(depth_est[valid] - depth_gt[valid])
     err_rel = err_abs / depth_gt[valid]
     return {
         "rmse_depth": np.sqrt(np.mean(err_abs**2)),
-        "mae_depth":  np.mean(err_abs),
+        "mean_depth":  np.mean(err_abs),
         "bad5rel":    np.mean(err_rel > 0.05) * 100   # 5% relative error
     }
